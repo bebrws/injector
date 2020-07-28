@@ -11,6 +11,7 @@
 
 void payload_entry(int argc, char **argv, FILE *in, FILE *out, FILE *err)
 {
+    printf("This should come out in the stdout of the injected app\n");
     fprintf(out, "Hello from payload!\n");
 
     fprintf(out, "argv: [");

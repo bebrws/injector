@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -arch i386 -arch x86_64
+CFLAGS = -lpthread
 LDFLAGS = -framework AppKit -framework CoreFoundation -framework CoreServices -framework Foundation
 
 SRCS = src/main.m src/payload.m src/mach_inject.c

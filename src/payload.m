@@ -29,7 +29,7 @@
     (ret (*)(__VA_ARGS__))((char*)fcn + offset)
 
 // expose some pthreads private API (fortunately we're not going for the App Store!)
-extern void __pthread_set_self(char *);
+extern void _pthread_set_self(char *);
 
 // params used for payloadThreadEntry
 struct ThreadParams {
@@ -242,7 +242,7 @@ void payloadEntry(ptrdiff_t codeOffset, void *paramBlock,
     struct ThreadParams params;
     
     RELOCATE(codeOffset, int, pthread_attr_init, pthread_attr_t *);
-    RELOCATE(codeOffset, void, __pthread_set_self, char *);
+    RELOCATE(codeOffset, void, _pthread_set_self, char *);
     RELOCATE(codeOffset, int, pthread_attr_getschedpolicy,
         const pthread_attr_t * __restrict, int * __restrict);
     RELOCATE(codeOffset, int, pthread_attr_setdetachstate, pthread_attr_t *,
@@ -264,7 +264,7 @@ void payloadEntry(ptrdiff_t codeOffset, void *paramBlock,
     // isn't documented but is done in mach_inject_bundle. From inspecting the
     // mach_inject source it's clear that there's enough room in this buffer
     // for bootstrap purposes.
-    __pthread_set_self_impl((char*)dummy_pthread_data);
+    _pthread_set_self_impl((char*)dummy_pthread_data);
 
     // Now that we've got a slightly saner state let's create a new "normal"
     // thread that we can load our dylib in - this thread is too raw to use for
